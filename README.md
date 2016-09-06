@@ -30,44 +30,44 @@ Fork and clone this lab. Open the `objc-fizzbuzz.xcodeproj` file and navigate to
 1 — Declare a `for` loop that will iterate `100` times. At which value should the counter begin in respect to FizzBuzz?  
 **Hint:** *The range of the loop's counter should be* `1` *to* `100`*, not* `0` *to* `99`.
 
-```objc
-for (NSUInteger i = 1; i <= 100; i++) { 
+```swift
+for  i in 1...100{
 
 }
 ```
 2 — Begin the loop's implementation by printing `i` to the console:
 
-```objc
-for (NSUInteger i = 1; i <= 100; i++) { 
-    NSLog(@"%lu", i);
+```swift
+for  i in 1...100{
+    print(i)
+
 }
 ```
 This will print the integers `1` through `100`.
 
-3 — Instead of formatting directly into the `NSLog()`, let's create local string variable called `result` which we can use to set the loop's output based on different conditions. Initialize `result` to an empty string; on a separate line reassign it to the interpolated string containing the loop's counter by using `NSString`'s `stringWithFormat:` method; finally, use the `result` string in the `NSLog()` instead:
+3 — Let's create local string variable called `result` which we can use to set the loop's output based on different conditions. Initialize `result` to an empty string then on a separate line reassign it to the interpolated string containing the loop's counter by using `\( )`; finally, use the `result` string in the print statement instead:
 
-```objc
-for (NSUInteger i = 1; i <= 100; i++) { 
-    NSString *result = @"";
-    result = [NSString stringWithFormat:@"%lu", i];
-    NSLog(@"%@", result);
+```swift
+for i in 1...100{
+    var result = ""
+    result = "\(i)"
+    print(result)
 }
 ```
 This should still print the integers `1` through `100`.
 
-4 — Now, let's have the loop print `Fizz` on every third iteration. We can accomplish this by using an `if` statement and an `else` statement. In the `if` statement's conditional, use the modulus operator (`%`) to determine if the remainder of dividing the value of `i` by `3` is equal to `0`. If this evaluates to `YES`, the `if` statement should set `result` to `@"Fizz"`. If not, the `else` statement (which is the "default" action) should set `result` to the interpolated string of `i` that we wrote in step 3:
+4 — Now, let's have the loop print `Fizz` on every third iteration. We can accomplish this by using an `if` statement and an `else` statement. In the `if` statement's conditional, use the modulus operator (`%`) to determine if the remainder of dividing the value of `i` by `3` is equal to `0`. If this evaluates to `true`, the `if` statement should set `result` to `"Fizz"`. If not, the `else` statement (which is the "default" action) should set `result` to the interpolated string of `i` that we wrote in step 3:
 
-```objc
-for (NSUInteger i = 1; i <= 100; i++) { 
-    NSString *result = @"";
+```swift
+for i in 1...100{
+    var result = ""
+    if i % 3 == 0{
+        result = "Fizz"
     
-    if (i % 3 == 0) {
-        result = @"Fizz";
+    }else{
+        result = "\(i)"
     }
-    else {
-        result = [NSString stringWithFormat:@"%lu", i];
-    }
-    NSLog(@"%@", result);
+    print(result)
 }
 ```
 This should now print the integers `1` through `100` with every multiple of three (`3`) replaced by the word "Fizz":
@@ -90,23 +90,24 @@ Fizz
 Fizz
 ...
 ```
-5 — Now let's have the loop print "Buzz" on every fifth iteration. Insert an `else if` statement that determines of the remainder (`%`) of dividing the current value of `i` by `5` is equal to `0`. If so, then set `result` to `@"Buzz"`:
+5 — Now let's have the loop print "Buzz" on every fifth iteration. Insert an `else if` statement that determines of the remainder (`%`) of dividing the current value of `i` by `5` is equal to `0`. If so, then set `result` to `"Buzz"`:
 
-```objc
-for (NSUInteger i = 1; i <= 100; i++) { 
-    NSString *result = @"";
+```swift
+
+for i in 1...100{
+    var result = ""
+    if i % 3 == 0{
+        result = "Fizz"
     
-    if (i % 3 == 0) {
-        result = @"Fizz";
+    }else if i % 5 == 0{
+        result = "Buzz"
+    }else{
+        result = "\(i)"
     }
-    else if (i % 5 == 0) {
-        result = @"Buzz";
-    }
-    else {
-        result = [NSString stringWithFormat:@"%lu", i];
-    }
-    NSLog(@"%@", result);
+    print(result)
+    
 }
+
 ```
 This should now print the integers `1` through `100` with every multiple of three (`3`) replaced by the word "Fizz", and every multiple of five (`5`) that is **not** also a multiple of three replaced by the word "Buzz":
 
@@ -132,24 +133,23 @@ So, why does every multiple of fifteen (`15`) still print "Fizz"? Remember that 
 
 6 — Let's instead start the switch block with an `if` statement that evaluates whether or not the current value of `i` is a multiple of *both* three (`3`) *and* five (`5`). We can use the same remainder logic as the other two evaluations but combine them with "and" logical operator (`&&`). If both of these conditions pass simultaneously, we can set `result` to `@"FizzBuzz"`. We'll also have to alter the current leading `if (i % 3 == 0 ) { ... }` statement into an `else if` statement since it no longer leads the switch block:
 
-```objc
-for (NSUInteger i = 1; i <= 100; i++) { 
-    NSString *result = @"";
+```swift
+
+for i in 1...100{
+    var result = ""
     
-    if (i % 3 == 0 && i % 5 == 0) {
-        result = @"FizzBuzz";
+    if i % 3 == 0 && i % 5{
+        result = "FizzBuzz"
+    }else if i % 3 == 0 {
+        result = "Fizz"
+    }else if i % 5 == 0{
+        result = "Buzz"
+    }else{
+        result = "\(i)"
     }
-    else if (i % 3 == 0) {    // becomes an 'else if' statement
-        result = @"Fizz";
-    }
-    else if (i % 5 == 0) {
-        result = @"Buzz";
-    }
-    else {
-        result = [NSString stringWithFormat:@"%lu", i];
-    }
-    NSLog(@"%@", result);
+    print(result)
 }
+
 ```
 This should now print the correct sequence to FizzBuzz:
 
@@ -173,27 +173,26 @@ FizzBuzz
 ```
 7 — Now that we have a working (but **not** ideal) implementation of FizzBuzz, we can play around with the loop's parameters to get a different "slice" of the FizzBuzz sequence. While we could do this directly in the loop's conditional line, let's move the values into variables to follow good-practice guidelines of avoiding "magic numbers". Before the loop, declare two `NSUInteger` variables called `start` and `limit`. Set them equal to `1` and `100` respectively and replace the integers in the `for` loop's conditional line with these new variables.:
 
-```objc
-NSUInteger start = 1;
-NSUInteger limit = 100;
+```swift
+var start = 1
+var limit = 100
 
-for (NSUInteger i = start; i <= limit; i++) { 
-    NSString *result = @"";
+for i in start...limit{
+    var result = ""
     
-    if (i % 3 == 0 && i % 5 == 0) {
-        result = @"FizzBuzz";
+    if i % 3 == 0 && i % 5 == 0{
+        result = "FizzBuzz"
+    }else if i % 3 == 0 {
+        result = "Fizz"
+    }else if i % 5 == 0{
+        result = "Buzz"
+    }else{
+        result = "\(i)"
     }
-    else if (i % 3 == 0) {    // becomes an 'else if' statement
-        result = @"Fizz";
-    }
-    else if (i % 5 == 0) {
-        result = @"Buzz";
-    }
-    else {
-        result = [NSString stringWithFormat:@"%lu", i];
-    }
-    NSLog(@"%@", result);
+    print(result)
 }
+
+
 ```
 This should still print the FizzBuzz sequence from `1` to `100`:
 
@@ -217,9 +216,9 @@ FizzBuzz
 ```
 8 — Now, play around with the values of `start` and `limit`. Try getting the slice of `100` to `130`:
 
-```objc
-NSUInteger start = 100;
-NSUInteger limit = 130;
+```swift
+var start = 100
+var limit = 130
 ...
 ```
 
